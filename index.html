@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Application</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Email Application</h1>
+        <button id="speakButton">Speak</button>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const speakButton = document.getElementById('speakButton');
+                const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.msSpeechRecognition)();
+                recognition.lang = 'en-US';
+
+                speakButton.addEventListener('click', () => {
+                    recognition.start();
+
+                    recognition.onresult = function (event) {
+                        const command = event.results[0][0].transcript.toLowerCase();
+                        console.log('Recognized command:', command);
+                    };
+
+                    recognition.onend = function () {
+                        console.log('Speech recognition ended.');
+                    };
+                });
+            });
+        </script>
+    </div>
+</body>
+</html>
